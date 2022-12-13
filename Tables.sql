@@ -8,7 +8,7 @@ create table Vendor(
     accountnumber varchar2(40),
     name varchar2(100),
     creditrating number(1),
-    preferredvendortstaus number(1),
+    preferredvendortstatus number(1),
     activeflag number(1),
     purchasingwebserviceurl varchar2(100),
     modifieddate date,
@@ -32,20 +32,6 @@ create table PurchaseOrderHeader(
     constraint fk_vendorid foreign key(vendorid)references Vendor(businessentityid)
 );
 
-create table PurchaseOrderDetail(
-   purchaseorderid number(10),
-   purchaseorderdetailid  number(10),
-   duedate date,
-   orderqty  number(10),
-   productid  number(10),
-   unitprice number,
-   receivedqty number(10),
-   rejectedqty number(10),
-   modifieddate date,
-   constraint pk_POD_id primary key(purchaseorderdetailid, purchaseorderid),
-   constraint fk_orderid foreign key(purchaseorderid) references PurchaseOrderHeader(purchaseorderid)
-);
-
 create table ProductVendor(
     productid number(10),
     businessentityid number(10),
@@ -61,3 +47,19 @@ create table ProductVendor(
     constraint pk_PV_id primary key(productid, businessentityid),
     constraint fk_businessentityid foreign key (businessentityid) references Vendor(businessentityid)
 );
+
+create table PurchaseOrderDetail(
+   purchaseorderid number(10),
+   purchaseorderdetailid number(10),
+   duedate date,
+   orderqty number(10),
+   productid number(10),
+   unitprice number,
+   receivedqty number(10),
+   rejectedqty number(10),
+   modifieddate date,
+   constraint pk_POD_id primary key(purchaseorderdetailid, purchaseorderid),
+   constraint fk_orderid foreign key(purchaseorderid) references PurchaseOrderHeader(purchaseorderid)
+);
+
+alter SESSION set NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS';
