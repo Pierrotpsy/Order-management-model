@@ -8,7 +8,7 @@ create table Vendor(
     accountnumber varchar2(40),
     name varchar2(100),
     creditrating number(1),
-    preferredvendortstaus number(1),
+    preferredvendortstatus number(1),
     activeflag number(1),
     purchasingwebserviceurl varchar2(100),
     modifieddate date,
@@ -17,7 +17,7 @@ create table Vendor(
 
 create table PurchaseOrderHeader(
     purchaseorderid number(10),
-    revisionnumber number(1),
+    revisionnumber number(2),
     status number(1),
     employeeid number(10),
     vendorid number(10),
@@ -42,7 +42,7 @@ create table PurchaseOrderDetail(
    receivedqty number(10),
    rejectedqty number(10),
    modifieddate date,
-   constraint pk_POD_id primary key(purchaseorderdetailid, purchaseorderid),
+   constraint pk_POD_id primary key(purchaseorderdetailid),
    constraint fk_orderid foreign key(purchaseorderid) references PurchaseOrderHeader(purchaseorderid)
 );
 
