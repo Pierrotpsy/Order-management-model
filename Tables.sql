@@ -62,4 +62,3 @@ create table PurchaseOrderDetail(
    constraint fk_orderid foreign key(purchaseorderid) references PurchaseOrderHeader(purchaseorderid)
 );
 
-alter SESSION set NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS';
