@@ -37,3 +37,5 @@ SELECT productid, SUM(orderqty) AS qtypurchased FROM purchaseorderdetail GROUP B
 -- I)
 
 --Add complex queries
+
+select purchaseorderdetail.productid, sum(purchaseorderdetail.unitprice*purchaseorderdetail.orderqty) as amount,  EXTRACT(YEAR from purchaseorderdetail.duedate) as year from purchaseorderdetail inner join productvendor on (purchaseorderdetail.productid = productvendor.productid) group by purchaseorderdetail.productid, EXTRACT(YEAR from purchaseorderdetail.duedate) order by year asc, amount desc;
