@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="order-management-model">Order-management-model</h1>
+<p>This project uses Oracle SQL and Oracle PL/SQL to implement all functionalities.
+Power BI is also used at the end in order to produce dashboards using the data from the Oracle Database.</p>
+<p>Full GitHub repo available <a href="https://github.com/Pierrotpsy/Order-management-model">here</a>.</p>
+<h2 id="1-data-management">1. Data Management</h2>
+<p>As the data is furnished with the subject, we only need to concern ourselves with the data model and the data import.</p>
+<h4 id="a-data-model">A) Data Model</h4>
+<p>An overview of the data model was given along with the subject, which is designed to work with the given dataset.</p>
+<p><img src="model.PNG" alt="Image"></p>
+<p>Therefore, the only challenge was to transform the model in SQL language and add constraints to the created tables.</p>
+<p>The code to create the tables can be found in the <code>Tables.SQL</code> file.</p>
+<p>As is the norm with SQL tables, we needed to try to add primary and foreign keys to tables where applicable.</p>
+<p>As such, the following constraints were added :</p>
+<ul>
+<li>A primary key constraint on <strong>Vendor</strong> which concerns <em>businessentityid</em>.</li>
+<li>A primary key constraint on <strong>PurchaseOrderHeader</strong> which concerns <em>purchaseorderid</em>.</li>
+<li>A foreign key constraint on <strong>PurchaseOrderHeader</strong> which concerns <em>vendorid</em>, and <strong>Vendor</strong>.<em>businessentityid</em>.</li>
+<li>A primary key constraint on <strong>ProductVendor</strong> which concerns both <em>productid</em> and <em>businessentityid</em>.</li>
+<li>A foreign key constraint on <strong>ProductVendor</strong> which concerns <em>businessentityid</em> and <strong>Vendor</strong>.<em>businessentityid</em>.</li>
+<li>A primary key contraint on <strong>PurchaseOrderDetail</strong> which concerns both <em>purchaseorderdetailid</em> and <em>purchaseorderid</em>.</li>
+<li>A foreign key constraint on <strong>PurchaseOrderDetail</strong> which concerns <em>purchaseorderid</em> and <strong>PurchaseOrderHeader</strong>.<em>purchaseorderid</em>.</li>
+</ul>
+<h4 id="b-data-import">B) Data Import</h4>
+<p>To import the data, we decided to create PL/SQL scripts. This allows us to control the data more accurately and to properly transform data that can't be managed by Oracle SQL (Dates with milliseconds, booleans, etc.), as well as to format strings before adding them to the database (in our case, we deleted unnecessary spaces, but other procedures could be done to make the strings in the database more uniform, maybe letter case management?).</p>
+<p>To use the data import scripts, the directory of the project, which is to say the directory of the CSV files, must be indicated.</p>
+<p>To facilitate CSV file management, regular expressions were used. They allowed us to precisely select data as well as transform it according to our needs.</p>
+<p>As mentioned before, booleans aren't natively supported by Oracle SQL, but they are in Oracle PL/SQL, so we simply converted <strong>true</strong> and <strong>false</strong> to their syntaxically accepted counterparts, <strong>1</strong> and <strong>0</strong>.</p>
+<p>When running the script, an error while reading the file may occur. This happens when OracleDB users don't have the authorisation to access the folder in which the data is kep. You will need to add them to the list of authorized users in Read Only mode for the script to properly work.</p>
+<p>The script to populate the tables can be found in the <code>ImportFromCSV.sql</code> file.</p>
+<h2 id="2-data-querying">2. Data Querying</h2>
+<h4 id="a-optimized-queries">A) Optimized queries</h4>
+<p>The queries can be found in the <code>Queries.sql</code> file.</p>
+<details>
+    <summary>Display the Vendor names and the product numbers they sell for vendors with a credit rating of 5 and productid greater than 500.</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> <span class="hljs-keyword">name</span>, productid  
+    <span class="hljs-keyword">from</span> vendor   
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> productvendor  
+            <span class="hljs-keyword">on</span> (vendor.businessentityid = productvendor.businessentityid)  
+    <span class="hljs-keyword">where</span> (creditrating = <span class="hljs-number">5</span>) <span class="hljs-keyword">and</span> (productid &gt; <span class="hljs-number">500</span>);  
+        <span class="hljs-comment">-- Cost : 4</span>
+</div></code></pre>
+<p><img src="2.A.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>. Display the purchase order number, OrderDate, purchase order detail id, order qty and product number for any purchase order with an order qty greater than 500.</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> purchaseorderheader.purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid  
+    <span class="hljs-keyword">from</span> purchaseorderheader  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> purchaseorderdetail  
+            <span class="hljs-keyword">on</span> (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+    <span class="hljs-keyword">where</span> orderqty &gt; <span class="hljs-number">500</span>;  
+        <span class="hljs-comment">-- Cost : 30</span>
+</div></code></pre>
+<p>In order to reduce the cost of our queries, we use materialized views. Those can be used on several queries that are based on the same tables.<br>
+These views also reduce queries' cardinality. This way less storage is used on the computer.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Using materialized view :</span>
+
+<span class="hljs-keyword">create</span> <span class="hljs-keyword">materialized</span> <span class="hljs-keyword">view</span> product1  
+    <span class="hljs-keyword">build</span> <span class="hljs-keyword">immediate</span>  
+    <span class="hljs-keyword">refresh</span> <span class="hljs-keyword">complete</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">demand</span>  
+    <span class="hljs-keyword">as</span>  
+        <span class="hljs-keyword">select</span> purchaseorderheader.purchaseorderid, orderdate, purchaseorderdetailid, orderqty,  
+            productid, vendorid, unitprice  
+        <span class="hljs-keyword">from</span> purchaseorderheader  
+            <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> purchaseorderdetail  
+                <span class="hljs-keyword">on</span> (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid);  
+        
+<span class="hljs-keyword">select</span> purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid  
+    <span class="hljs-keyword">from</span> product1  
+        <span class="hljs-keyword">where</span> orderqty &gt; <span class="hljs-number">500</span>;  
+        <span class="hljs-comment">-- Cost : 14</span>
+</div></code></pre>
+<p><img src="2.B.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>Display the purchase order number, vendor number, purchase order detail id, product number and unit price. For purchase order numbers from 1400 to 1600.</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> purchaseorderheader.purchaseorderid, vendorid, purchaseorderdetailid, productid, unitprice  
+    <span class="hljs-keyword">from</span> purchaseorderheader  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> purchaseorderdetail  
+            <span class="hljs-keyword">on</span> (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+    <span class="hljs-keyword">where</span> purchaseorderheader.purchaseorderid <span class="hljs-keyword">between</span> <span class="hljs-number">1400</span> <span class="hljs-keyword">and</span> <span class="hljs-number">1600</span>;  
+        <span class="hljs-comment">-- Cost : 30  </span>
+
+<span class="hljs-comment">-- Using materialized view :  </span>
+      
+<span class="hljs-keyword">select</span> purchaseorderid, vendorid, purchaseorderdetailid, productid, unitprice   
+    <span class="hljs-keyword">from</span> product1  
+        <span class="hljs-keyword">where</span> purchaseorderid <span class="hljs-keyword">between</span> <span class="hljs-number">1400</span> <span class="hljs-keyword">and</span> <span class="hljs-number">1600</span>;  
+        <span class="hljs-comment">-- Cost : 14  </span>
+
+<span class="hljs-comment">-- drop materialized view product1;</span>
+</div></code></pre>
+<p>We do not forget to drop every view at the end of its utilisation.</p>
+<p><img src="2.C.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>Display how many orders are purchased from each vendor and the cost of the orders. Return the results sorted in descending order of highest cost.</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> <span class="hljs-keyword">count</span>(purchaseorderid) <span class="hljs-keyword">as</span> numberorder,  
+    vendorid, <span class="hljs-keyword">sum</span>(subtotal + freight + taxamt) <span class="hljs-keyword">as</span> ordercost  
+    <span class="hljs-keyword">from</span> purchaseorderheader  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor  
+            <span class="hljs-keyword">on</span> vendorid = businessentityid  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> vendorid  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> ordercost <span class="hljs-keyword">desc</span>;  
+        <span class="hljs-comment">-- Cost : 14  </span>
+        
+<span class="hljs-comment">-- Using materialized view :  </span>
+ 
+<span class="hljs-keyword">create</span> <span class="hljs-keyword">materialized</span> <span class="hljs-keyword">view</span> vendor  
+    <span class="hljs-keyword">build</span> <span class="hljs-keyword">immediate</span>  
+    <span class="hljs-keyword">refresh</span> <span class="hljs-keyword">complete</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">demand</span>  
+    <span class="hljs-keyword">as</span>  
+        <span class="hljs-keyword">select</span> <span class="hljs-keyword">count</span>(purchaseorderid) <span class="hljs-keyword">as</span> numberorder,  
+            vendorid, <span class="hljs-keyword">sum</span>(subtotal + freight + taxamt) <span class="hljs-keyword">as</span> ordercost  
+        <span class="hljs-keyword">from</span> purchaseorderheader  
+            <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor  
+                <span class="hljs-keyword">on</span> vendorid = businessentityid  
+        <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> vendorid;  
+
+<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> vendor  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> ordercost <span class="hljs-keyword">desc</span>;  
+        <span class="hljs-comment">-- Cost : 3  </span>
+</div></code></pre>
+<p><img src="2.D.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>Display the average number of orders purchased across all vendors and the average cost across all vendors.</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> <span class="hljs-keyword">round</span>(<span class="hljs-keyword">avg</span>(numberorder), <span class="hljs-number">3</span>), <span class="hljs-keyword">round</span>(<span class="hljs-keyword">avg</span>(ordercost),<span class="hljs-number">3</span>)  
+    <span class="hljs-keyword">from</span>(  
+        <span class="hljs-keyword">select</span> <span class="hljs-keyword">count</span>(purchaseorderid) <span class="hljs-keyword">as</span> numberorder,  
+            vendorid, <span class="hljs-keyword">sum</span>(subtotal + freight + taxamt) <span class="hljs-keyword">as</span> ordercost  
+            <span class="hljs-keyword">from</span> purchaseorderheader  
+                <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor  
+                    <span class="hljs-keyword">on</span> vendorid = businessentityid  
+            <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> vendorid);  
+        <span class="hljs-comment">-- Cost : 13  </span>
+        
+<span class="hljs-comment">-- Using materialized view :  </span>
+     
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">round</span>(<span class="hljs-keyword">avg</span>(numberorder), <span class="hljs-number">3</span>), <span class="hljs-keyword">round</span>(<span class="hljs-keyword">avg</span>(ordercost),<span class="hljs-number">3</span>)   
+    <span class="hljs-keyword">from</span> vendor;  
+        <span class="hljs-comment">-- Cost : 2  </span>
+
+<span class="hljs-comment">-- drop materialized view vendor;  </span>
+</div></code></pre>
+<p><img src="2.E.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>Display The top ten vendors with the highest percentage of rejected received items.</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> vendorid, <span class="hljs-keyword">round</span>((<span class="hljs-number">100</span>*<span class="hljs-keyword">sum</span>(rejectedqty) / <span class="hljs-keyword">sum</span>(receivedqty)),<span class="hljs-number">3</span>) <span class="hljs-keyword">as</span> percentagerejected  
+    <span class="hljs-keyword">from</span> purchaseorderheader  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> purchaseorderdetail  
+            <span class="hljs-keyword">on</span> (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> vendorid  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> percentagerejected <span class="hljs-keyword">desc</span> <span class="hljs-keyword">fetch</span> <span class="hljs-keyword">first</span> <span class="hljs-number">10</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">only</span>;  
+        <span class="hljs-comment">-- Cost : 34  </span>
+
+<span class="hljs-comment">-- Using materialized view :  </span>
+
+<span class="hljs-keyword">create</span> <span class="hljs-keyword">materialized</span> <span class="hljs-keyword">view</span> product2  
+    <span class="hljs-keyword">build</span> <span class="hljs-keyword">immediate</span>  
+    <span class="hljs-keyword">refresh</span> <span class="hljs-keyword">complete</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">demand</span>  
+    <span class="hljs-keyword">as</span>  
+        <span class="hljs-keyword">select</span> vendorid, orderqty, purchaseorderdetailid, rejectedqty, receivedqty, productid  
+        <span class="hljs-keyword">from</span> purchaseorderheader  
+            <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> purchaseorderdetail  
+                <span class="hljs-keyword">on</span> (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid);  
+
+<span class="hljs-keyword">select</span> vendorid, <span class="hljs-keyword">round</span>((<span class="hljs-number">100</span>*<span class="hljs-keyword">SUM</span>(rejectedqty) / <span class="hljs-keyword">sum</span>(receivedqty)),<span class="hljs-number">3</span>) <span class="hljs-keyword">as</span> percentagerejected  
+    <span class="hljs-keyword">from</span> product2  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> vendorid  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> percentagerejected <span class="hljs-keyword">desc</span> <span class="hljs-keyword">fetch</span> <span class="hljs-keyword">first</span> <span class="hljs-number">10</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">only</span>;  
+        <span class="hljs-comment">-- Cost : 14  </span>
+</div></code></pre>
+<p><img src="2.F.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>Display The top ten vendors with the largest orders (in terms of quantity purchased).</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> vendorid, <span class="hljs-keyword">sum</span>(orderqty) <span class="hljs-keyword">as</span> qty  
+    <span class="hljs-keyword">from</span> purchaseorderheader  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> purchaseorderdetail  
+            <span class="hljs-keyword">on</span> (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> vendorid  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> qty <span class="hljs-keyword">desc</span> <span class="hljs-keyword">fetch</span> <span class="hljs-keyword">first</span> <span class="hljs-number">10</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">only</span>;  
+        <span class="hljs-comment">-- Cost : 34  </span>
+
+<span class="hljs-comment">-- Using materialized view :  </span>
+
+<span class="hljs-keyword">select</span> vendorid, <span class="hljs-keyword">sum</span>(orderqty) <span class="hljs-keyword">as</span> qty  
+    <span class="hljs-keyword">from</span> product2  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> vendorid   
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> qty <span class="hljs-keyword">desc</span> <span class="hljs-keyword">fetch</span> <span class="hljs-keyword">first</span> <span class="hljs-number">10</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">only</span>;  
+        <span class="hljs-comment">-- Cost : 14        </span>
+</div></code></pre>
+<p><img src="2.G_1.PNG" alt="Image"></p>
+<p>We gave this question two different meanings. The first one was to display the top ten vendors with the more ordered articles in general. The following up one is to display the top ten vendors with the largest distinct orders in terms of quantity.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> vendorid, <span class="hljs-keyword">sum</span>(orderqty) <span class="hljs-keyword">as</span> sumorder  
+    <span class="hljs-keyword">from</span> purchaseorderheader  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> purchaseorderdetail  
+            <span class="hljs-keyword">on</span> (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> purchaseorderdetailid, vendorid  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> sumorder <span class="hljs-keyword">desc</span> <span class="hljs-keyword">fetch</span> <span class="hljs-keyword">first</span> <span class="hljs-number">10</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">only</span>;  
+<span class="hljs-comment">-- Can display the same vendor several times?  </span>
+        <span class="hljs-comment">-- Cost : 34  </span>
+
+<span class="hljs-comment">-- Using materialized view :  </span>
+
+<span class="hljs-keyword">select</span> vendorid, <span class="hljs-keyword">sum</span>(orderqty) <span class="hljs-keyword">as</span> sumorder  
+    <span class="hljs-keyword">from</span> product2  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> purchaseorderdetailid, vendorid  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> sumorder <span class="hljs-keyword">desc</span> <span class="hljs-keyword">fetch</span> <span class="hljs-keyword">first</span> <span class="hljs-number">10</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">only</span>;  
+        <span class="hljs-comment">-- Cost : 14  </span>
+</div></code></pre>
+<p><img src="2.G_2.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>Display the top ten products (in terms of quantity purchased).</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> productid, <span class="hljs-keyword">sum</span>(orderqty) <span class="hljs-keyword">as</span> qtypurchased  
+    <span class="hljs-keyword">from</span> purchaseorderdetail  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> productid   
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> qtypurchased <span class="hljs-keyword">desc</span> <span class="hljs-keyword">fetch</span> <span class="hljs-keyword">first</span> <span class="hljs-number">10</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">only</span>;  
+        <span class="hljs-comment">-- Cost : 22  </span>
+
+<span class="hljs-comment">-- Using materialized view :  </span>
+
+<span class="hljs-keyword">select</span> productid, <span class="hljs-keyword">sum</span>(orderqty) <span class="hljs-keyword">as</span> qtypurchased  
+    <span class="hljs-keyword">from</span> product2  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> productid  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> qtypurchased <span class="hljs-keyword">desc</span> <span class="hljs-keyword">fetch</span> <span class="hljs-keyword">first</span> <span class="hljs-number">10</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">only</span>;  
+        <span class="hljs-comment">-- Cost : 14  </span>
+        
+<span class="hljs-comment">-- drop materialized view product2;  </span>
+</div></code></pre>
+<p><img src="2.H.PNG" alt="Image"></p>
+</details>
+<br>
+<h4 id="b-complex-queries">B) Complex queries</h4>
+<details>
+    <summary>Display the price amount of purchased products by year</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> purchaseorderdetail.productid,  
+        <span class="hljs-keyword">sum</span>(purchaseorderdetail.unitprice*purchaseorderdetail.orderqty) <span class="hljs-keyword">as</span> amount,  
+        <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> purchaseorderdetail.duedate) <span class="hljs-keyword">as</span> <span class="hljs-keyword">year</span>  
+    <span class="hljs-keyword">from</span> purchaseorderdetail  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> productvendor  
+            <span class="hljs-keyword">on</span> (purchaseorderdetail.productid = productvendor.productid)  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> purchaseorderdetail.productid, <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> purchaseorderdetail.duedate)  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">year</span> <span class="hljs-keyword">asc</span>, amount <span class="hljs-keyword">desc</span>;  
+        <span class="hljs-comment">-- Cost : 282  </span>
+
+<span class="hljs-comment">-- Using materialsed view :  </span>
+
+<span class="hljs-keyword">create</span> <span class="hljs-keyword">materialized</span> <span class="hljs-keyword">view</span> purchase  
+    <span class="hljs-keyword">build</span> <span class="hljs-keyword">immediate</span>  
+    <span class="hljs-keyword">refresh</span> <span class="hljs-keyword">complete</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">demand</span>  
+    <span class="hljs-keyword">as</span>  
+        <span class="hljs-keyword">select</span> purchaseorderdetail.productid, purchaseorderdetail.unitprice, purchaseorderdetail.orderqty,  
+            <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> purchaseorderdetail.duedate) <span class="hljs-keyword">as</span> <span class="hljs-keyword">year</span>,  
+            businessentityid, rejectedqty, receivedqty  
+        <span class="hljs-keyword">from</span> purchaseorderdetail  
+            <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> productvendor  
+                <span class="hljs-keyword">on</span> (purchaseorderdetail.productid = productvendor.productid);  
+
+<span class="hljs-keyword">select</span> productid, <span class="hljs-keyword">sum</span>(unitprice*orderqty) <span class="hljs-keyword">as</span> amount, <span class="hljs-keyword">year</span>  
+    <span class="hljs-keyword">from</span> purchase  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> productid, <span class="hljs-keyword">year</span>  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">year</span> <span class="hljs-keyword">asc</span>, amount <span class="hljs-keyword">desc</span>;  
+        <span class="hljs-comment">-- Cost : 26  </span>
+</div></code></pre>
+<p><img src="2.I_1.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>Display the vendor, vendor id, percentage of rejected articles, ordered, received, and rejected quantity for each vendor ordered by descending rejected percentage.</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> productvendor.businessentityid, <span class="hljs-keyword">name</span>,  
+    <span class="hljs-keyword">round</span>(<span class="hljs-number">100</span>*<span class="hljs-keyword">sum</span>(rejectedqty)/<span class="hljs-keyword">sum</span>(receivedqty),<span class="hljs-number">3</span>) <span class="hljs-keyword">as</span> rejectedPercentage,  
+    <span class="hljs-keyword">sum</span>(orderqty), <span class="hljs-keyword">sum</span>(receivedqty), <span class="hljs-keyword">sum</span>(rejectedqty)  
+    <span class="hljs-keyword">from</span> purchaseorderdetail  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> productvendor  
+            <span class="hljs-keyword">on</span> (purchaseorderdetail.productid = productvendor.productid)  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor  
+            <span class="hljs-keyword">on</span> (productvendor.businessentityid = vendor.businessentityid)  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> productvendor.businessentityid, <span class="hljs-keyword">name</span>  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> rejectedPercentage <span class="hljs-keyword">desc</span>;  
+        <span class="hljs-comment">-- Cost : 26  </span>
+
+<span class="hljs-comment">-- Using materialsed view :  </span>
+
+<span class="hljs-keyword">select</span> purchase.businessentityid, <span class="hljs-keyword">name</span>,  
+    <span class="hljs-keyword">round</span>(<span class="hljs-number">100</span>*suù(rejectedqty)/<span class="hljs-keyword">sum</span>(receivedqty),<span class="hljs-number">3</span>) <span class="hljs-keyword">as</span> rejectedPercentage,  
+    <span class="hljs-keyword">sum</span>(orderqty), <span class="hljs-keyword">sum</span>(receivedqty), <span class="hljs-keyword">sum</span>(rejectedqty)  
+    <span class="hljs-keyword">from</span> purchase  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor  
+            <span class="hljs-keyword">on</span> (purchase.businessentityid = vendor.businessentityid)  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> purchase.businessentityid, <span class="hljs-keyword">name</span>   
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> rejectedPercentage <span class="hljs-keyword">desc</span>;  
+        <span class="hljs-comment">-- Cost : 28  </span>
+            <span class="hljs-comment">--&gt; The query that doesn't use the materialzed view is faster than the one using it.   </span>
+
+</div></code></pre>
+<p><img src="2.I_2.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>Display the price amount of purchased product by vendor</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> productvendor.businessentityid, <span class="hljs-keyword">name</span>,  
+    <span class="hljs-keyword">sum</span>(purchaseorderdetail.unitprice*purchaseorderdetail.orderqty) <span class="hljs-keyword">as</span> amount,  
+    <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> purchaseorderdetail.duedate) <span class="hljs-keyword">as</span> <span class="hljs-keyword">year</span>  
+    <span class="hljs-keyword">from</span> purchaseorderdetail  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> productvendor <span class="hljs-keyword">on</span> (purchaseorderdetail.productid = productvendor.productid)  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor <span class="hljs-keyword">on</span> (productvendor.businessentityid = vendor.businessentityid)  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> productvendor.businessentityid, <span class="hljs-keyword">name</span>, <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> purchaseorderdetail.duedate)  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">year</span> <span class="hljs-keyword">asc</span>, amount <span class="hljs-keyword">desc</span>;  
+        <span class="hljs-comment">-- Cost : 496  </span>
+
+<span class="hljs-comment">-- Using materialsed view : </span>
+
+<span class="hljs-keyword">select</span> purchase.businessentityid, <span class="hljs-keyword">name</span>, <span class="hljs-keyword">sum</span>(unitprice*orderqty) <span class="hljs-keyword">as</span> amount, <span class="hljs-keyword">year</span> 
+    <span class="hljs-keyword">from</span> purchase <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor <span class="hljs-keyword">on</span> (purchase.businessentityid = vendor.businessentityid)
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> purchase.businessentityid, <span class="hljs-keyword">name</span>, <span class="hljs-keyword">year</span>
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">year</span> <span class="hljs-keyword">asc</span>, amount <span class="hljs-keyword">desc</span>;
+        <span class="hljs-comment">-- Cost : 28</span>
+</div></code></pre>
+<p><img src="2.I_3.PNG" alt="Image"></p>
+</details>
+<br>
+<details>
+    <summary>Display the rejected percentage per year per vendor</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> productvendor.businessentityid, <span class="hljs-keyword">name</span>,  
+    <span class="hljs-keyword">round</span>(<span class="hljs-number">100</span>*<span class="hljs-keyword">sum</span>(rejectedqty)/<span class="hljs-keyword">sum</span>(receivedqty),<span class="hljs-number">3</span>) <span class="hljs-keyword">as</span> rejectedPercentage,  
+    <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> purchaseorderdetail.duedate) <span class="hljs-keyword">as</span> <span class="hljs-keyword">year</span>  
+    <span class="hljs-keyword">from</span> purchaseorderdetail  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> productvendor <span class="hljs-keyword">on</span> (purchaseorderdetail.productid = productvendor.productid)  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor <span class="hljs-keyword">on</span> (productvendor.businessentityid = vendor.businessentityid)  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> productvendor.businessentityid, <span class="hljs-keyword">name</span>, <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> purchaseorderdetail.duedate)  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> rejectedPercentage <span class="hljs-keyword">desc</span>;  
+        <span class="hljs-comment">-- Cost : 478  </span>
+
+<span class="hljs-comment">-- Using materialsed view : </span>
+
+<span class="hljs-keyword">select</span> purchase.businessentityid, <span class="hljs-keyword">name</span>,  
+    <span class="hljs-keyword">round</span>(<span class="hljs-number">100</span>*<span class="hljs-keyword">sum</span>(rejectedqty)/<span class="hljs-keyword">sum</span>(receivedqty),<span class="hljs-number">3</span>) <span class="hljs-keyword">as</span> rejectedPercentage, <span class="hljs-keyword">year</span>  
+    <span class="hljs-keyword">from</span> purchase  
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor <span class="hljs-keyword">on</span> (purchase.businessentityid = vendor.businessentityid)  
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> purchase.businessentityid, <span class="hljs-keyword">name</span>, <span class="hljs-keyword">year</span>  
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> rejectedPercentage <span class="hljs-keyword">desc</span>;  
+        <span class="hljs-comment">-- Cost : 388  </span>
+
+<span class="hljs-comment">-- drop materialized view purchase;   </span>
+</div></code></pre>
+<p><img src="2.I_4.PNG" alt="Image"></p>
+</details>
+<br>
+<h4 id="c-triggers">C) Triggers</h4>
+<p>The triggers can be found in the <code>Triggers.sql</code> file.</p>
+<details>
+    <summary>Create a Transaction_History table with the same structure as
+PurchaseOrderDetail table. Implement using a trigger "After Update" On
+PurchaseOrderDetail table that inserts a row in the Transaction_History table, updates ModifiedDate in PurchaseOrderDetail, updates the PurchaseOrderHeader.SubTotal column.</summary>
+<br>
+<p>The <strong>TransactionHistory</strong> table was easy to create.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">--drop table TransactionHistory;</span>
+
+<span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> TransactionHistory(
+   purchaseorderid <span class="hljs-built_in">number</span>(<span class="hljs-number">10</span>),
+   purchaseorderdetailid <span class="hljs-built_in">number</span>(<span class="hljs-number">10</span>),
+   duedate <span class="hljs-built_in">date</span>,
+   orderqty <span class="hljs-built_in">number</span>(<span class="hljs-number">10</span>),
+   productid <span class="hljs-built_in">number</span>(<span class="hljs-number">10</span>),
+   unitprice <span class="hljs-built_in">number</span>,
+   receivedqty <span class="hljs-built_in">number</span>(<span class="hljs-number">10</span>),
+   rejectedqty <span class="hljs-built_in">number</span>(<span class="hljs-number">10</span>),
+   modifieddate <span class="hljs-built_in">date</span>
+);
+</div></code></pre>
+<p>As for the trigger, it is asked that the trigger modifies the modified date of the table it applies to. However, this is by definition not permitted by Oracle SQL using an <strong>AFTER UPDATE</strong> trigger and will throw a mutating table error (<em>ORA-04091</em>).
+Therefore, we decided to implement a <strong>BEFORE UPDATE</strong> trigger which allows such an update. This doesn't change anything else in the trigger, since the two other functionalities would also work in an <strong>AFTER UPDATE</strong> trigger.</p>
+<p>Here is the code for the trigger :</p>
+<pre class="hljs"><code><div><span class="hljs-comment">--drop trigger Trig_After_POD_Update;</span>
+
+<span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">replace</span> <span class="hljs-keyword">trigger</span> Trig_Before_POD_Update
+<span class="hljs-keyword">before</span> <span class="hljs-keyword">update</span> <span class="hljs-keyword">on</span> PurchaseOrderDetail 
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">each</span> <span class="hljs-keyword">row</span>
+<span class="hljs-keyword">DECLARE</span>  
+<span class="hljs-keyword">BEGIN</span> 
+    <span class="hljs-keyword">select</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">into</span> :new.modifieddate <span class="hljs-keyword">from</span> dual;
+    
+    <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> TransactionHistory <span class="hljs-keyword">values</span> (
+            :new.purchaseorderid,
+            :new.purchaseorderdetailid,
+            :new.duedate,
+            :new.orderqty,
+            :new.productid,
+            :new.unitprice,
+            :new.receivedqty,
+            :new.rejectedqty,
+            :new.modifieddate
+            );
+            
+    <span class="hljs-keyword">update</span> PurchaseOrderHeader 
+        <span class="hljs-keyword">set</span> subtotal = :new.orderqty*:new.unitprice 
+            - :old.orderqty*:old.unitprice 
+            + subtotal 
+        <span class="hljs-keyword">where</span> purchaseorderid = :new.purchaseorderid;
+<span class="hljs-keyword">END</span>;
+/
+
+<span class="hljs-comment">--update PurchaseOrderDetail set unitprice = 10, orderqty = 1 where purchaseorderdetailid = 2;</span>
+
+</div></code></pre>
+</details>
+<br>
+<details>
+    <summary>Implement using a trigger "Before Update" On PurchaseOrderHeader table that prohibits updates of the PurchaseOrderHeader.SubTotal column if the corresponding data in the PurchaseOrderDetail table is not consistent with the new value of the PurchaseOrderHeader.SubTotal column</summary>
+<br>
+<p>Here is the code for the trigger :</p>
+<pre class="hljs"><code><div><span class="hljs-comment">--drop trigger Trig_Before_POH_Update;</span>
+
+<span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">replace</span> <span class="hljs-keyword">trigger</span> Trig_Before_POH_Update
+<span class="hljs-keyword">before</span> <span class="hljs-keyword">update</span> <span class="hljs-keyword">of</span> subtotal <span class="hljs-keyword">on</span> PurchaseOrderHeader 
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">each</span> <span class="hljs-keyword">row</span>
+<span class="hljs-keyword">DECLARE</span>  
+    invalidSubtotal <span class="hljs-keyword">exception</span>;
+    subtotalHeader PurchaseOrderHeader.subtotal%TYPE;
+    subtotalDetail PurchaseOrderHeader.subtotal%TYPE;
+<span class="hljs-keyword">BEGIN</span> 
+    <span class="hljs-keyword">select</span> <span class="hljs-keyword">sum</span>(orderqty*unitprice) <span class="hljs-keyword">into</span> subtotalDetail 
+        <span class="hljs-keyword">from</span> PurchaseOrderDetail 
+        <span class="hljs-keyword">where</span> purchaseorderid = :new.purchaseorderid 
+        <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> purchaseorderid;
+
+    subtotalHeader := :new.subtotal;
+    if(subtotalHeader != subtotalDetail)
+    then 
+        raise invalidSubtotal;
+    <span class="hljs-keyword">end</span> <span class="hljs-keyword">if</span>;
+    
+EXCEPTION 
+    when invalidSubtotal then
+    raise_application_error(-20010, 'Subtotal does not match the amounts in the PurchaseOrderDetail table');
+<span class="hljs-keyword">END</span>;
+/
+
+<span class="hljs-comment">--update PurchaseOrderHeader set subtotal = 10 where purchaseorderid = 2;</span>
+</div></code></pre>
+</details>
+<br>
+<h2 id="3-data-visualization">3. Data Visualization</h2>
+<p>In order to visualize  the data in our database more clearly, we implemented some Power BI Dashboards.</p>
+<p>Connecting an Oracle database to Power BI isn't natively supported by ordinary microsoft connectors.</p>
+<p><a href="https://www.oracle.com/a/ocom/docs/database/microsoft-powerbi-connection-adw.pdf">This </a> tutorial was helpful to set it up correctly.</p>
+<p>Once that is done, a connection can be established with the database, in our case using <code>localhost</code> or <code>localhost:1521/xe</code> as server name. But we encountered some difficulties trying to locate all our tables in the importer that pops up afterwards. The only way for us to get data from the database was to directly use queries in our connection.</p>
+<p><a href="https://app.powerbi.com/links/u8K7Vs41tz?ctid=88eebcae-d6e6-4ef7-bba4-4c34f4c2d5e0&amp;pbi_source=linkShare&amp;bookmarkGuid=72f1d9bc-bd99-4682-88e8-1821c84fd1d5">Power BI Dashboards online</a></p>
+<details>
+    <summary>Markdown Power BI Integration</summary>
+<iframe title="dahsboards" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=f206ee89-df15-4f9b-9e49-79dd3a160089&autoAuth=true&ctid=88eebcae-d6e6-4ef7-bba4-4c34f4c2d5e0" frameborder="0" allowFullScreen="true"></iframe>
+</details>
+<br>
+<p>We made 3 dashboards :</p>
+<ul>
+<li>The first one represents the 5 best-selling products per year</li>
+</ul>
+<details>
+    <summary>First Dashboard</summary>
+<p>The dashboard was generated using this query :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> purchaseorderdetail.productid,      
+    <span class="hljs-keyword">sum</span>(purchaseorderdetail.unitprice*purchaseorderdetail.orderqty) <span class="hljs-keyword">as</span> amount,  
+    <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> purchaseorderdetail.duedate) <span class="hljs-keyword">as</span> <span class="hljs-keyword">year</span> 
+    <span class="hljs-keyword">from</span> purchaseorderdetail 
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> productvendor <span class="hljs-keyword">on</span> (purchaseorderdetail.productid = productvendor.productid) 
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> purchaseorderdetail.productid, 
+            <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> purchaseorderdetail.duedate) 
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">year</span> <span class="hljs-keyword">asc</span>, 
+        amount <span class="hljs-keyword">desc</span>;
+
+</div></code></pre>
+<p>A rank column was then generated according to each year, and a filter was applied to only select the first 5 products of each year.</p>
+<p>Formatting was then applied to the visual in order to emphasize the values and to sort them correctly.</p>
+<p><img src="dahsboards-1.png" alt="Image"></p>
+</details>
+<br>
+<ul>
+<li>The second one represents the 20 vendors with the least percentage of rejected received items.</li>
+</ul>
+<details>
+    <summary>Second Dashboard</summary>
+<p>The dashboard was generated using this query :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> productvendor.businessentityid, 
+    <span class="hljs-keyword">name</span>, 
+    <span class="hljs-number">100</span>*<span class="hljs-keyword">sum</span>(rejectedqty)/<span class="hljs-keyword">sum</span>(receivedqty) <span class="hljs-keyword">as</span> rejected
+    <span class="hljs-keyword">from</span> purchaseorderdetail 
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> productvendor <span class="hljs-keyword">on</span> (purchaseorderdetail.productid = productvendor.productid)
+        <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> vendor <span class="hljs-keyword">on</span> (productvendor.businessentityid = vendor.businessentityid) 
+    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> productvendor.businessentityid, <span class="hljs-keyword">name</span> 
+    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> rejected <span class="hljs-keyword">asc</span>;
+</div></code></pre>
+<p>A rank column was then added and a filter was applied to select the first 20 vendors.</p>
+<p>Formatting was then applied to the visual in order to emphasize the values and to sort them correctly.</p>
+<p>Although the question asked for the first 5 vendors, that wasn't very interesting since the first 5 vendors all have a percentage of rejected received items of 0. So we decided to include the first 20 vendors to make it more pertinent.</p>
+<p><img src="dahsboards-2.png" alt="Image"></p>
+</details>
+<br>
+<ul>
+<li>The third one shows performance per order by adding the order quantity, the received quantity and the rejected quantity side to side.</li>
+</ul>
+<details>
+    <summary>Third Dashboard</summary>
+<p>This dashboard was generated using this query :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">select</span> purchaseorderid, 
+    orderqty, 
+    receivedqty, 
+    rejectedqty 
+    <span class="hljs-keyword">from</span> PurchaseOrderDetail;
+</div></code></pre>
+<p>Formatting was then applied to the visual in order to emphasize the three values and to sort them correctly.</p>
+<p><img src="dahsboards-3.png" alt="Image"></p>
+</details>
+<br>
+
+</body>
+</html>
