@@ -49,7 +49,7 @@ SELECT COUNT(purchaseorderid) AS numberorder, vendorid, SUM(subtotal + freight +
         
 -- Using materialized view :
  
-CREATE materialized view vendor1
+CREATE materialized view vendor
     build immediate 
     refresh complete on demand
     as
@@ -57,7 +57,7 @@ CREATE materialized view vendor1
         FROM purchaseorderheader INNER JOIN vendor ON vendorid = businessentityid
         GROUP BY vendorid;
 
-SELECT * FROM vendor1
+SELECT * FROM vendor
     ORDER BY ordercost DESC;
         -- Cost : 3
 
@@ -72,10 +72,10 @@ SELECT round(AVG(numberorder), 3), round(AVG(ordercost),3)
 -- Using materialized view :
      
 SELECT round(AVG(numberorder), 3), round(AVG(ordercost),3) 
-    FROM vendor1;
+    FROM vendor;
         -- Cost : 2
 
-DROP materialized view vendor1;
+DROP materialized view vendor;
 
 -- F)
 SELECT vendorid, round((100*SUM(rejectedqty) / SUM(receivedqty)),3) AS percentagerejected 
