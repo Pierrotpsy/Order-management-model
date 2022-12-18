@@ -3,6 +3,8 @@
 This project uses Oracle SQL and Oracle PL/SQL to implement all functionalities.
 Power BI is also used at the end in order to produce dashboards using the data from the Oracle Database.
 
+Full GitHub repo available [here](https://github.com/Pierrotpsy/Order-management-model).
+
 ## 1. Data Management
 
 As the data is furnished with the subject, we only need to concern ourselves with the data model and the data import.
