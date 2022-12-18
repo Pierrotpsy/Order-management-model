@@ -59,6 +59,7 @@ Once that is done, a connection can be established with the database; in our cas
     <summary>Markdown Power BI Integration</summary>
 
 <iframe title="dahsboards" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=f206ee89-df15-4f9b-9e49-79dd3a160089&autoAuth=true&ctid=88eebcae-d6e6-4ef7-bba4-4c34f4c2d5e0" frameborder="0" allowFullScreen="true"></iframe>
+
 </details>
 
 <br>
