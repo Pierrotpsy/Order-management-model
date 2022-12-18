@@ -44,6 +44,8 @@ When running the script, an error while reading the file may occur. This happens
 
 #### A) Optimized queries
 
+The queries can be found in the `Queries.sql` file.
+
 <details>
     <summary>Display the Vendor names and the product numbers they sell for vendors with a credit rating of 5 and productid greater than 500.</summary>
 
@@ -157,6 +159,8 @@ When running the script, an error while reading the file may occur. This happens
 <br>
 
 #### C) Triggers
+
+The triggers can be found in the `Triggers.sql` file.
 
 <details>
     <summary>Create a Transaction_History table with the same structure as
