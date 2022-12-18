@@ -1,4 +1,4 @@
-create or replace directory PROJECT_DIR as 'C:\Users\33769\Documents\GitHub\Order-management-model\Data';
+create or replace directory PROJECT_DIR as 'C:\Users\aurel\Documents\GitHub\Order-management-model\Data';
 grant read, write on directory PROJECT_DIR to public;
 set SERVEROUTPUT on;
 alter SESSION set NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS';
