@@ -40,6 +40,8 @@ As mentioned before, booleans aren't natively supported by Oracle SQL, but they 
 
 When running the script, an error while reading the file may occur. This happens when OracleDB users don't have the authorisation to access the folder in which the data is kep. You will need to add them to the list of authorized users in Read Only mode for the script to properly work.
 
+The script to populate the tables can be found in the `ImportFromCSV.sql` file.
+
 ## 2. Data Querying
 
 #### A) Optimized queries
