@@ -151,11 +151,11 @@ SELECT purchaseorderdetail.productid, SUM(purchaseorderdetail.unitprice*purchase
     ORDER BY year asc, amount desc;
         -- Cost : 282
 
-SELECT productvendor.businessentityid, name, 100*SUM(rejectedqty)/SUM(receivedqty) AS rejected, SUM(orderqty), SUM(receivedqty), SUM(rejectedqty) 
+SELECT productvendor.businessentityid, name, round(100*SUM(rejectedqty)/SUM(receivedqty),3) AS rejectedPercentage, SUM(orderqty), SUM(receivedqty), SUM(rejectedqty) 
     FROM purchaseorderdetail INNER JOIN productvendor ON (purchaseorderdetail.productid = productvendor.productid)
     INNER JOIN vendor ON (productvendor.businessentityid = vendor.businessentityid) 
     GROUP BY productvendor.businessentityid, name 
-    ORDER BY rejected asc;
+    ORDER BY rejectedPercentage desc;
         -- Cost : 26
         
 -- Using materialsed view :
@@ -173,11 +173,46 @@ SELECT productid, SUM(unitprice*orderqty) AS amount, year
     ORDER BY year asc, amount desc;
         -- Cost : 26
 
-SELECT purchase.businessentityid, name, 100*SUM(rejectedqty)/SUM(receivedqty) AS rejected, SUM(orderqty), SUM(receivedqty), SUM(rejectedqty) 
+SELECT purchase.businessentityid, name, 100*SUM(rejectedqty)/SUM(receivedqty) AS rejectedPercentage, SUM(orderqty), SUM(receivedqty), SUM(rejectedqty) 
     FROM purchase INNER JOIN vendor ON (purchase.businessentityid = vendor.businessentityid) 
     GROUP BY purchase.businessentityid, name 
-    ORDER BY rejected asc;
+    ORDER BY rejectedPercentage asc;
         -- Cost : 28 
             --> The query that doesn't use the materialzed view is faster than the one using it.
 
 DROP materialized view purchase;
+
+
+
+
+
+SELECT productvendor.businessentityid, name,SUM(purchaseorderdetail.unitprice*purchaseorderdetail.orderqty) AS amount, EXTRACT(YEAR FROM purchaseorderdetail.duedate) AS year 
+    FROM purchaseorderdetail 
+    INNER JOIN productvendor ON (purchaseorderdetail.productid = productvendor.productid) 
+    INNER JOIN vendor ON (productvendor.businessentityid = vendor.businessentityid)
+    GROUP BY productvendor.businessentityid, name, EXTRACT(YEAR from purchaseorderdetail.duedate) 
+    ORDER BY year asc, amount desc;
+        -- Cost : 496
+
+
+SELECT purchase.businessentityid, name, SUM(unitprice*orderqty) AS amount, year 
+    FROM purchase INNER JOIN vendor ON (purchase.businessentityid = vendor.businessentityid)
+    GROUP BY purchase.businessentityid, name, year
+    ORDER BY year asc, amount desc;
+        -- Cost : 28
+
+
+
+SELECT productvendor.businessentityid, name, round(100*SUM(rejectedqty)/SUM(receivedqty),3) AS rejectedPercentage, EXTRACT(YEAR FROM purchaseorderdetail.duedate) AS year 
+    FROM purchaseorderdetail 
+    INNER JOIN productvendor ON (purchaseorderdetail.productid = productvendor.productid)
+    INNER JOIN vendor ON (productvendor.businessentityid = vendor.businessentityid) 
+    GROUP BY productvendor.businessentityid, name, EXTRACT(YEAR from purchaseorderdetail.duedate)  
+    ORDER BY rejectedPercentage desc;
+        -- Cost : 478
+        
+SELECT purchase.businessentityid, name, round(100*SUM(rejectedqty)/SUM(receivedqty),3) AS rejectedPercentage, year
+    FROM purchase INNER JOIN vendor ON (purchase.businessentityid = vendor.businessentityid) 
+    GROUP BY purchase.businessentityid, name, year
+    ORDER BY rejectedPercentage desc;
+        -- Cost : 388

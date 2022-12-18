@@ -310,7 +310,7 @@ select productid, sum(orderqty) as qtypurchased
 #### B) Complex queries
 
 <details>
-    <summary>Display the amount of purchased products by year</summary>
+    <summary>Display the price amount of purchased products by year</summary>
 
 ```sql
 select purchaseorderdetail.productid,  
@@ -375,9 +375,7 @@ select purchase.businessentityid, name,
     group by purchase.businessentityid, name   
     order by rejectedPercentage desc;  
         -- Cost : 28  
-            --> The query that doesn't use the materialzed view is faster than the one using it.  
-
--- drop materialized view purchase;  
+            --> The query that doesn't use the materialzed view is faster than the one using it.   
 
 ```
 
@@ -387,14 +385,62 @@ select purchase.businessentityid, name,
 <br>
 
 <details>
-    <summary></summary>
+    <summary>Display the price amount of purchased product by vendor</summary>
 
 ```sql
+select productvendor.businessentityid, name,  
+    sum(purchaseorderdetail.unitprice*purchaseorderdetail.orderqty) as amount,  
+    EXTRACT(YEAR from purchaseorderdetail.duedate) as year  
+    from purchaseorderdetail  
+        inner join productvendor on (purchaseorderdetail.productid = productvendor.productid)  
+        inner join vendor on (productvendor.businessentityid = vendor.businessentityid)  
+    group by productvendor.businessentityid, name, EXTRACT(YEAR from purchaseorderdetail.duedate)  
+    order by year asc, amount desc;  
+        -- Cost : 496  
+
+-- Using materialsed view : 
+
+select purchase.businessentityid, name, sum(unitprice*orderqty) as amount, year 
+    from purchase inner join vendor on (purchase.businessentityid = vendor.businessentityid)
+    group by purchase.businessentityid, name, year
+    order by year asc, amount desc;
+        -- Cost : 28
 ```
 
-![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.I_1.PNG)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.I_3.PNG)
 </details>
 
+<br>
+
+<details>
+    <summary>Display the rejected percentage per year per vendor</summary>
+
+```sql
+select productvendor.businessentityid, name,  
+    round(100*sum(rejectedqty)/sum(receivedqty),3) as rejectedPercentage,  
+    EXTRACT(YEAR from purchaseorderdetail.duedate) as year  
+    from purchaseorderdetail  
+        inner join productvendor on (purchaseorderdetail.productid = productvendor.productid)  
+        inner join vendor on (productvendor.businessentityid = vendor.businessentityid)  
+    group by productvendor.businessentityid, name, EXTRACT(YEAR from purchaseorderdetail.duedate)  
+    order by rejectedPercentage desc;  
+        -- Cost : 478  
+
+-- Using materialsed view : 
+
+select purchase.businessentityid, name,  
+    round(100*sum(rejectedqty)/sum(receivedqty),3) as rejectedPercentage, year  
+    from purchase  
+        inner join vendor on (purchase.businessentityid = vendor.businessentityid)  
+    group by purchase.businessentityid, name, year  
+    order by rejectedPercentage desc;  
+        -- Cost : 388  
+
+-- drop materialized view purchase;   
+```
+
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.I_4.PNG)
+</details>
 <br>
 
 #### C) Triggers
