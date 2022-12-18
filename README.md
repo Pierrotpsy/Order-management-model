@@ -55,7 +55,8 @@ The queries can be found in the `Queries.sql` file.
 ```sql
 SELECT name, productid  
     FROM vendor   
-        INNER JOIN productvendor ON (vendor.businessentityid = productvendor.businessentityid)  
+        INNER JOIN productvendor  
+            ON (vendor.businessentityid = productvendor.businessentityid)  
     WHERE (creditrating = 5) AND (productid > 500);  
         -- Cost : 4
 ```
@@ -71,7 +72,8 @@ SELECT name, productid
 ```sql
 SELECT purchaseorderheader.purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid  
     FROM purchaseorderheader  
-        INNER JOIN purchaseorderdetail ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+        INNER JOIN purchaseorderdetail  
+            ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
     WHERE orderqty > 500;  
         -- Cost : 30
 
@@ -83,7 +85,8 @@ CREATE materialized view product1
     as  
         SELECT purchaseorderheader.purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid, vendorid, unitprice  
         FROM purchaseorderheader  
-            INNER JOIN purchaseorderdetail ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid);  
+            INNER JOIN purchaseorderdetail  
+                ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid);  
         
 SELECT purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid  
     FROM product1  
@@ -102,7 +105,8 @@ SELECT purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid
 ```sql
 SELECT purchaseorderheader.purchaseorderid, vendorid, purchaseorderdetailid, productid, unitprice  
     FROM purchaseorderheader  
-        INNER JOIN purchaseorderdetail ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+        INNER JOIN purchaseorderdetail  
+            ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
     WHERE purchaseorderheader.purchaseorderid BETWEEN 1400 AND 1600;  
         -- Cost : 30  
 
@@ -125,9 +129,10 @@ DROP materialized view product1;
     <summary>Display how many orders are purchased from each vendor and the cost of the orders. Return the results sorted in descending order of highest cost.</summary>
 
 ```sql
-SELECT COUNT(purchaseorderid) AS numberorder, vendorid, SUM(subtotal + freight + taxamt)AS ordercost  
+SELECT COUNT(purchaseorderid) AS numberorder, vendorid, SUM(subtotal + freight + taxamt) AS ordercost  
     FROM purchaseorderheader  
-        INNER JOIN vendor ON vendorid = businessentityid  
+        INNER JOIN vendor  
+            ON vendorid = businessentityid  
     GROUP BY vendorid  
     ORDER BY ordercost DESC;  
         -- Cost : 14  
@@ -140,7 +145,8 @@ CREATE materialized view vendor
     as  
         SELECT COUNT(purchaseorderid) AS numberorder, vendorid, SUM(subtotal + freight + taxamt) AS ordercost  
         FROM purchaseorderheader  
-            INNER JOIN vendor ON vendorid = businessentityid  
+            INNER JOIN vendor  
+                ON vendorid = businessentityid  
         GROUP BY vendorid;  
 
 SELECT * FROM vendor  
@@ -161,7 +167,8 @@ SELECT round(AVG(numberorder), 3), round(AVG(ordercost),3)
     FROM(  
         SELECT COUNT(purchaseorderid) AS numberorder, vendorid, SUM(subtotal + freight + taxamt) AS ordercost  
             FROM purchaseorderheader  
-                INNER JOIN vendor ON vendorid = businessentityid  
+                INNER JOIN vendor  
+                    ON vendorid = businessentityid  
             GROUP BY vendorid);  
         -- Cost : 13  
         
@@ -185,7 +192,8 @@ DROP materialized view vendor;
 ```sql
 SELECT vendorid, round((100*SUM(rejectedqty) / SUM(receivedqty)),3) AS percentagerejected  
     FROM purchaseorderheader  
-        INNER JOIN purchaseorderdetail ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+        INNER JOIN purchaseorderdetail  
+            ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
     GROUP BY vendorid  
     ORDER BY percentagerejected DESC FETCH FIRST 10 ROWS ONLY;  
         -- Cost : 34  
@@ -198,7 +206,8 @@ CREATE materialized view product2
     as  
         SELECT vendorid, orderqty, purchaseorderdetailid, rejectedqty, receivedqty, productid  
         FROM purchaseorderheader  
-            INNER JOIN purchaseorderdetail ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid);  
+            INNER JOIN purchaseorderdetail  
+                ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid);  
 
 SELECT vendorid, round((100*SUM(rejectedqty) / SUM(receivedqty)),3) AS percentagerejected  FROM product2  
     GROUP BY vendorid  
@@ -217,7 +226,8 @@ SELECT vendorid, round((100*SUM(rejectedqty) / SUM(receivedqty)),3) AS percentag
 ```sql
 SELECT vendorid, SUM(orderqty) AS qty  
     FROM purchaseorderheader  
-        INNER JOIN purchaseorderdetail ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+        INNER JOIN purchaseorderdetail  
+            ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
     GROUP BY vendorid  
     ORDER BY qty DESC FETCH FIRST 10 ROWS ONLY;  
         -- Cost : 34  
@@ -235,7 +245,8 @@ SELECT vendorid, SUM(orderqty) AS qty FROM product2
 ```sql
 SELECT vendorid, SUM(orderqty) AS sumorder  
     FROM purchaseorderheader  
-        INNER JOIN purchaseorderdetail ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
+        INNER JOIN purchaseorderdetail  
+            ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid)  
     GROUP BY purchaseorderdetailid, vendorid  
     ORDER BY sumorder DESC FETCH FIRST 10 ROWS ONLY;  
 -- Can display the same vendor several times?  
@@ -287,9 +298,12 @@ DROP materialized view product2;
     <summary></summary>
 
 ```sql
-SELECT purchaseorderdetail.productid, SUM(purchaseorderdetail.unitprice*purchaseorderdetail.orderqty) AS amount, EXTRACT(YEAR FROM purchaseorderdetail.duedate) AS year  
+SELECT purchaseorderdetail.productid,  
+        SUM(purchaseorderdetail.unitprice*purchaseorderdetail.orderqty) AS amount,  
+        EXTRACT(YEAR FROM purchaseorderdetail.duedate) AS year  
     FROM purchaseorderdetail  
-        INNER JOIN productvendor ON (purchaseorderdetail.productid = productvendor.productid)  
+        INNER JOIN productvendor  
+            ON (purchaseorderdetail.productid = productvendor.productid)  
     GROUP BY purchaseorderdetail.productid, EXTRACT(YEAR from purchaseorderdetail.duedate)  
     ORDER BY year asc, amount desc;  
         -- Cost : 282  
@@ -300,9 +314,12 @@ CREATE materialized view purchase
     build immediate  
     refresh complete on demand  
     as  
-        SELECT purchaseorderdetail.productid, purchaseorderdetail.unitprice, purchaseorderdetail.orderqty, EXTRACT(YEAR FROM purchaseorderdetail.duedate) AS year, businessentityid, rejectedqty, receivedqty  
+        SELECT purchaseorderdetail.productid, purchaseorderdetail.unitprice, purchaseorderdetail.orderqty,  
+            EXTRACT(YEAR FROM purchaseorderdetail.duedate) AS year,  
+            businessentityid, rejectedqty, receivedqty  
         FROM purchaseorderdetail  
-            INNER JOIN productvendor ON (purchaseorderdetail.productid = productvendor.productid);  
+            INNER JOIN productvendor  
+                ON (purchaseorderdetail.productid = productvendor.productid);  
 
 SELECT productid, SUM(unitprice*orderqty) AS amount, year  
     FROM purchase  
@@ -320,19 +337,26 @@ SELECT productid, SUM(unitprice*orderqty) AS amount, year
     <summary></summary>
 
 ```sql
-SELECT productvendor.businessentityid, name, 100*SUM(rejectedqty)/SUM(receivedqty) AS rejected, SUM(orderqty), SUM(receivedqty), SUM(rejectedqty)  
+SELECT productvendor.businessentityid, name,  
+    100*SUM(rejectedqty)/SUM(receivedqty) AS rejected,  
+    SUM(orderqty), SUM(receivedqty), SUM(rejectedqty)  
     FROM purchaseorderdetail  
-        INNER JOIN productvendor ON (purchaseorderdetail.productid = productvendor.productid)  
-        INNER JOIN vendor ON (productvendor.businessentityid = vendor.businessentityid)  
+        INNER JOIN productvendor  
+            ON (purchaseorderdetail.productid = productvendor.productid)  
+        INNER JOIN vendor  
+            ON (productvendor.businessentityid = vendor.businessentityid)  
     GROUP BY productvendor.businessentityid, name  
     ORDER BY rejected asc;  
         -- Cost : 26  
 
 -- Using materialsed view :  
 
-SELECT purchase.businessentityid, name, 100*SUM(rejectedqty)/SUM(receivedqty) AS rejected, SUM(orderqty), SUM(receivedqty), SUM(rejectedqty)  
+SELECT purchase.businessentityid, name,  
+    100*SUM(rejectedqty)/SUM(receivedqty) AS rejected,  
+    SUM(orderqty), SUM(receivedqty), SUM(rejectedqty)  
     FROM purchase  
-        INNER JOIN vendor ON (purchase.businessentityid = vendor.businessentityid)  
+        INNER JOIN vendor  
+            ON (purchase.businessentityid = vendor.businessentityid)  
     GROUP BY purchase.businessentityid, name   
     ORDER BY rejected asc;  
         -- Cost : 28  
