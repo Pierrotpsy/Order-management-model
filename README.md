@@ -51,10 +51,13 @@ The queries can be found in the `Queries.sql` file.
 <details>
     <summary>Display the Vendor names and the product numbers they sell for vendors with a credit rating of 5 and productid greater than 500.</summary>
 
+
 ```sql
+SELECT name, productid FROM vendor INNER JOIN productvendor ON (vendor.businessentityid = productvendor.businessentityid) WHERE (creditrating = 5) AND (productid > 500);
+        -- Cost : 4
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.A.PNG)
 </details>
 
 <br>
@@ -63,9 +66,27 @@ The queries can be found in the `Queries.sql` file.
     <summary>. Display the purchase order number, OrderDate, purchase order detail id, order qty and product number for any purchase order with an order qty greater than 500.</summary>
 
 ```sql
+SELECT purchaseorderheader.purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid 
+    FROM purchaseorderheader INNER JOIN purchaseorderdetail ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid) 
+        WHERE orderqty > 500;
+        -- Cost : 30
+
+-- Using materialized view :
+
+CREATE materialized view product1 
+    build immediate 
+    refresh complete on demand
+    as
+        SELECT purchaseorderheader.purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid, vendorid, unitprice
+        FROM purchaseorderheader INNER JOIN purchaseorderdetail ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid);
+        
+SELECT purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid 
+    FROM product1 
+        WHERE orderqty > 500;
+        -- Cost : 14
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.B.PNG)
 </details>
 
 <br>
@@ -76,7 +97,7 @@ The queries can be found in the `Queries.sql` file.
 ```sql
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.C.PNG)
 </details>
 
 <br>
@@ -87,7 +108,7 @@ The queries can be found in the `Queries.sql` file.
 ```sql
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.D.PNG)
 </details>
 
 <br>
@@ -98,7 +119,7 @@ The queries can be found in the `Queries.sql` file.
 ```sql
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.E.PNG)
 </details>
 
 <br>
@@ -109,7 +130,7 @@ The queries can be found in the `Queries.sql` file.
 ```sql
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.F.PNG)
 </details>
 
 <br>
@@ -120,7 +141,12 @@ The queries can be found in the `Queries.sql` file.
 ```sql
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.G_1.PNG)
+
+```sql
+```
+
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.G_2.PNG)
 </details>
 
 <br>
@@ -131,7 +157,7 @@ The queries can be found in the `Queries.sql` file.
 ```sql
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.H.PNG)
 </details>
 
 <br>
@@ -144,7 +170,7 @@ The queries can be found in the `Queries.sql` file.
 ```sql
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.I_1.PNG)
 </details>
 
 <br>
@@ -155,7 +181,7 @@ The queries can be found in the `Queries.sql` file.
 ```sql
 ```
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/2.I_2.PNG)
 </details>
 
 <br>
