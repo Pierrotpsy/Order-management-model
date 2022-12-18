@@ -353,7 +353,7 @@ select productid, sum(unitprice*orderqty) as amount, year
 
 ```sql
 select productvendor.businessentityid, name,  
-    round(100*SUM(rejectedqty)/SUM(receivedqty),3) as rejectedPercentage,  
+    round(100*sum(rejectedqty)/sum(receivedqty),3) as rejectedPercentage,  
     sum(orderqty), sum(receivedqty), sum(rejectedqty)  
     from purchaseorderdetail  
         inner join productvendor  
@@ -367,8 +367,8 @@ select productvendor.businessentityid, name,
 -- Using materialsed view :  
 
 select purchase.businessentityid, name,  
-    round(100*SUM(rejectedqty)/SUM(receivedqty),3) as rejectedPercentage,  
-    SUM(orderqty), SUM(receivedqty), SUM(rejectedqty)  
+    round(100*suù(rejectedqty)/sum(receivedqty),3) as rejectedPercentage,  
+    sum(orderqty), sum(receivedqty), sum(rejectedqty)  
     from purchase  
         inner join vendor  
             on (purchase.businessentityid = vendor.businessentityid)  
