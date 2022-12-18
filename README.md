@@ -83,7 +83,8 @@ CREATE materialized view product1
     build immediate  
     refresh complete on demand  
     as  
-        SELECT purchaseorderheader.purchaseorderid, orderdate, purchaseorderdetailid, orderqty, productid, vendorid, unitprice  
+        SELECT purchaseorderheader.purchaseorderid, orderdate, purchaseorderdetailid, orderqty,  
+            productid, vendorid, unitprice  
         FROM purchaseorderheader  
             INNER JOIN purchaseorderdetail  
                 ON (purchaseorderheader.purchaseorderid = purchaseorderdetail.purchaseorderid);  
@@ -129,7 +130,8 @@ DROP materialized view product1;
     <summary>Display how many orders are purchased from each vendor and the cost of the orders. Return the results sorted in descending order of highest cost.</summary>
 
 ```sql
-SELECT COUNT(purchaseorderid) AS numberorder, vendorid, SUM(subtotal + freight + taxamt) AS ordercost  
+SELECT COUNT(purchaseorderid) AS numberorder,  
+    vendorid, SUM(subtotal + freight + taxamt) AS ordercost  
     FROM purchaseorderheader  
         INNER JOIN vendor  
             ON vendorid = businessentityid  
@@ -143,7 +145,8 @@ CREATE materialized view vendor
     build immediate  
     refresh complete on demand  
     as  
-        SELECT COUNT(purchaseorderid) AS numberorder, vendorid, SUM(subtotal + freight + taxamt) AS ordercost  
+        SELECT COUNT(purchaseorderid) AS numberorder,  
+            vendorid, SUM(subtotal + freight + taxamt) AS ordercost  
         FROM purchaseorderheader  
             INNER JOIN vendor  
                 ON vendorid = businessentityid  
@@ -165,7 +168,8 @@ SELECT * FROM vendor
 ```sql
 SELECT round(AVG(numberorder), 3), round(AVG(ordercost),3)  
     FROM(  
-        SELECT COUNT(purchaseorderid) AS numberorder, vendorid, SUM(subtotal + freight + taxamt) AS ordercost  
+        SELECT COUNT(purchaseorderid) AS numberorder,  
+            vendorid, SUM(subtotal + freight + taxamt) AS ordercost  
             FROM purchaseorderheader  
                 INNER JOIN vendor  
                     ON vendorid = businessentityid  
