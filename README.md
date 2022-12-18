@@ -44,9 +44,230 @@ When running the script, an error while reading the file may occur. This happens
 
 #### A) Optimized queries
 
+<details>
+    <summary>Display the Vendor names and the product numbers they sell for vendors with a credit rating of 5 and productid greater than 500.</summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
+<details>
+    <summary>. Display the purchase order number, OrderDate, purchase order detail id, order qty and product number for any purchase order with an order qty greater than 500.</summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
+<details>
+    <summary>Display the purchase order number, vendor number, purchase order detail id, product number and unit price. For purchase order numbers from 1400 to 1600.</summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
+<details>
+    <summary>Display how many orders are purchased from each vendor and the cost of the orders. Return the results sorted in descending order of highest cost.</summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
+<details>
+    <summary>Display the average number of orders purchased across all vendors and the average cost across all vendors.</summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
+<details>
+    <summary>Display The top ten vendors with the highest percentage of rejected received items.</summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
+<details>
+    <summary>Display The top ten vendors with the largest orders (in terms of quantity purchased).</summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
+<details>
+    <summary>Display the top ten products (in terms of quantity purchased).</summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
 #### B) Complex queries
 
+<details>
+    <summary></summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
+<details>
+    <summary></summary>
+
+```sql
+```
+
+![Image not found](link)
+</details>
+
+<br>
+
 #### C) Triggers
+
+<details>
+    <summary>Create a Transaction_History table with the same structure as
+PurchaseOrderDetail table. Implement using a trigger "After Update" On
+PurchaseOrderDetail table that inserts a row in the Transaction_History table, updates ModifiedDate in PurchaseOrderDetail, updates the PurchaseOrderHeader.SubTotal column.</summary>
+
+<br>
+
+The **TransactionHistory** table was easy to create.
+
+```sql
+--drop table TransactionHistory;
+
+create table TransactionHistory(
+   purchaseorderid number(10),
+   purchaseorderdetailid number(10),
+   duedate date,
+   orderqty number(10),
+   productid number(10),
+   unitprice number,
+   receivedqty number(10),
+   rejectedqty number(10),
+   modifieddate date
+);
+```
+
+As for the trigger, it is asked that the trigger modifies the modified date of the table it applies to. However, this is by definition not permitted by Oracle SQL using an **AFTER UPDATE** trigger and will throw a mutating table error (*ORA-04091*). 
+Therefore, we decided to implement a **BEFORE UPDATE** trigger which allows such an update. This doesn't change anything else in the trigger, since the two other functionalities would also work in an **AFTER UPDATE** trigger.
+
+Here is the code for the trigger : 
+
+```sql
+--drop trigger Trig_After_POD_Update;
+
+create or replace trigger Trig_Before_POD_Update
+before update on PurchaseOrderDetail 
+for each row
+DECLARE  
+BEGIN 
+    select CURRENT_TIMESTAMP into :new.modifieddate from dual;
+    
+    insert into TransactionHistory values (
+            :new.purchaseorderid,
+            :new.purchaseorderdetailid,
+            :new.duedate,
+            :new.orderqty,
+            :new.productid,
+            :new.unitprice,
+            :new.receivedqty,
+            :new.rejectedqty,
+            :new.modifieddate
+            );
+            
+    update PurchaseOrderHeader 
+        set subtotal = :new.orderqty*:new.unitprice 
+            - :old.orderqty*:old.unitprice 
+            + subtotal 
+        where purchaseorderid = :new.purchaseorderid;
+END;
+/
+
+--update PurchaseOrderDetail set unitprice = 10, orderqty = 1 where purchaseorderdetailid = 2;
+
+```
+
+</details>
+
+<br>
+
+<details>
+    <summary>Implement using a trigger "Before Update" On PurchaseOrderHeader table that prohibits updates of the PurchaseOrderHeader.SubTotal column if the corresponding data in the PurchaseOrderDetail table is not consistent with the new value of the PurchaseOrderHeader.SubTotal column</summary>
+
+<br>
+
+Here is the code for the trigger : 
+
+```sql
+--drop trigger Trig_Before_POH_Update;
+
+create or replace trigger Trig_Before_POH_Update
+before update of subtotal on PurchaseOrderHeader 
+for each row
+DECLARE  
+    invalidSubtotal exception;
+    subtotalHeader PurchaseOrderHeader.subtotal%TYPE;
+    subtotalDetail PurchaseOrderHeader.subtotal%TYPE;
+BEGIN 
+    select sum(orderqty*unitprice) into subtotalDetail 
+        from PurchaseOrderDetail 
+        where purchaseorderid = :new.purchaseorderid 
+        group by purchaseorderid;
+
+    subtotalHeader := :new.subtotal;
+    if(subtotalHeader != subtotalDetail)
+    then 
+        raise invalidSubtotal;
+    end if;
+    
+EXCEPTION 
+    when invalidSubtotal then
+    raise_application_error(-20010, 'Subtotal does not match the amounts in the PurchaseOrderDetail table');
+END;
+/
+
+--update PurchaseOrderHeader set subtotal = 10 where purchaseorderid = 2;
+```
+
+![Image not found](link)
+</details>
+
+<br>
 
 
 ## 3. Data Visualization
@@ -57,7 +278,7 @@ Connecting an Oracle database to Power BI isn't natively supported by ordinary m
 
 [This ](https://www.oracle.com/a/ocom/docs/database/microsoft-powerbi-connection-adw.pdf) tutorial was helpful to set it up correctly.
 
-Once that is done, a connection can be established with the database; in our case using `localhost` or `localhost:1521/xe` as server name. But we encountered some difficulties trying to locate all our tables in the importer that pops up afterwards. The only way for us to get data from the database was to directly use queries in our connection.
+Once that is done, a connection can be established with the database, in our case using `localhost` or `localhost:1521/xe` as server name. But we encountered some difficulties trying to locate all our tables in the importer that pops up afterwards. The only way for us to get data from the database was to directly use queries in our connection.
 
 [Power BI Dashboards online](https://app.powerbi.com/links/u8K7Vs41tz?ctid=88eebcae-d6e6-4ef7-bba4-4c34f4c2d5e0&pbi_source=linkShare&bookmarkGuid=72f1d9bc-bd99-4682-88e8-1821c84fd1d5)
 
