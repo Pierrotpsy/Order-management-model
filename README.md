@@ -71,7 +71,7 @@ We made 3 dashboards :
 <details>
     <summary>First Dashboard</summary>
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/dahsboards-1.png)
 </details>
 
 <br>
@@ -80,16 +80,16 @@ We made 3 dashboards :
 <details>
     <summary>Second Dashboard</summary>
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/dahsboards-2.png)
 </details>
 
 <br>
 
-- The first one represents the 5 best-selling products per year
+- The third one shows performance per order by adding the order quantity, the received quantity and the rejected quantity side to side.
 <details>
     <summary>Third Dashboard</summary>
 
-![Image not found](link)
+![Image not found](https://github.com/Pierrotpsy/Order-management-model/blob/main/Media/dahsboards-3.png)
 </details>
 
 <br>
